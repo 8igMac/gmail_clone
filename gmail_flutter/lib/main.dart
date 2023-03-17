@@ -140,19 +140,7 @@ class _HomePageState extends State<HomePage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return Scaffold(
-                      appBar: AppBar(
-                        leading: IconButton(
-                          icon: Icon(Icons.back_hand),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                      body: Center(
-                        child: Text('Mail page'),
-                      ),
-                    );
+                    return MailPage();
                   },
                 ),
               );
@@ -212,6 +200,29 @@ class _HomePageState extends State<HomePage> {
         sender: const Sender(name: 'Batman'),
         time: '3月8號',
         title: 'To Superman $index',
+      ),
+    );
+  }
+}
+
+class MailPage extends StatelessWidget {
+  const MailPage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.back_hand),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Center(
+        child: Text('Mail page'),
       ),
     );
   }
