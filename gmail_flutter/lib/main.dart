@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return MailPage();
+                    return MailPage(mail: mails[index]);
                   },
                 ),
               );
@@ -206,8 +206,10 @@ class _HomePageState extends State<HomePage> {
 }
 
 class MailPage extends StatelessWidget {
+  final Mail mail;
   const MailPage({
     super.key,
+    required this.mail,
   });
 
   @override
@@ -222,7 +224,15 @@ class MailPage extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Text('Mail page'),
+        child: Column(
+          children: [
+            Text('title: ${mail.title}'),
+            Text('sender name: ${mail.sender.name}'),
+            Text('time: ${mail.time}'),
+            Image.network(mail.sender.avatarUrl),
+            Text('content: ${mail.content}'),
+          ],
+        ),
       ),
     );
   }
