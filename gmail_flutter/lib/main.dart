@@ -77,7 +77,8 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           CircleAvatar(
-            backgroundImage: NetworkImage(_imageAddr),
+            // backgroundImage: NetworkImage(_imageAddr),
+            backgroundImage: AssetImage('images/batman.png'),
           ),
           const SizedBox(width: 10),
         ],
