@@ -135,6 +135,28 @@ class _HomePageState extends State<HomePage> {
         itemCount: mails.length,
         itemBuilder: (context, index) {
           return ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Scaffold(
+                      appBar: AppBar(
+                        leading: IconButton(
+                          icon: Icon(Icons.back_hand),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      body: Center(
+                        child: Text('Mail page'),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
             // 留空白
             contentPadding: const EdgeInsets.all(10),
             leading: CircleAvatar(
