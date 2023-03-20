@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.amber, // note: this is cool
+        // 調整主題色系
+        colorSchemeSeed: Colors.amber,
       ),
       home: const HomePage(),
     );
@@ -40,6 +41,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         height: 60,
+        // 隱藏提示字 (可以把這個參數拿掉實驗看看效果)
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         onDestinationSelected: (int index) {
           setState(() {
@@ -72,14 +74,16 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Search'),
         elevation: 22,
+        // 使 AppBar 有圓角
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20), // 控制圓角半徑
         ),
         actions: [
           CircleAvatar(
             // backgroundImage: NetworkImage(_imageAddr),
             backgroundImage: AssetImage('images/batman.png'),
           ),
+          // 留一個寬度為 10 的空白
           const SizedBox(width: 10),
         ],
       ),
@@ -87,6 +91,7 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: const [
             Padding(
+              // 四周留空白
               padding: EdgeInsets.all(8.0),
               child: Text(
                 "Gmail",
@@ -128,6 +133,7 @@ class _HomePageState extends State<HomePage> {
         itemCount: 50,
         itemBuilder: (context, i) {
           return ListTile(
+            // 留空白
             contentPadding: const EdgeInsets.all(10),
             leading: CircleAvatar(
               radius: 40,
@@ -165,7 +171,9 @@ class _HomePageState extends State<HomePage> {
         icon: Icon(Icons.edit_outlined),
         label: Text('Edit'),
         onPressed: null,
+        // 控制 Icon 與 Label 間距
         extendedIconLabelSpacing: 30,
+        // 控制兩邊空白
         extendedPadding: EdgeInsets.symmetric(horizontal: 20),
       ),
     );
