@@ -37,6 +37,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Generate data.
+    final mails = getEmails();
+
     return Scaffold(
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
@@ -78,9 +81,8 @@ class _HomePageState extends State<HomePage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20), // 控制圓角半徑
         ),
-        actions: [
+        actions: const [
           CircleAvatar(
-            // backgroundImage: NetworkImage(_imageAddr),
             backgroundImage: AssetImage('images/batman.png'),
           ),
           // 留一個寬度為 10 的空白
@@ -130,33 +132,44 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: ListView.builder(
-        itemCount: 50,
-        itemBuilder: (context, i) {
+        itemCount: mails.length,
+        itemBuilder: (context, index) {
           return ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return MailPage(mail: mails[index]);
+                  },
+                ),
+              );
+            },
             // 留空白
             contentPadding: const EdgeInsets.all(10),
             leading: CircleAvatar(
               radius: 40,
-              backgroundImage: NetworkImage(_imageAddr),
+              backgroundImage: NetworkImage(mails[index].sender.avatarUrl),
             ),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text('Title'),
-                Text("3月8號"),
+              children: [
+                Text(mails[index].sender.name),
+                Text(mails[index].time),
               ],
             ),
             subtitle: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
-                  children: const [
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      'subtitlasdfsdfadsfe',
+                      mails[index].title,
                       style: TextStyle(fontSize: 20),
                     ),
                     Text(
-                      'subtitlasdfsdfadsfe',
+                      mails[index].content,
                       style: TextStyle(fontSize: 20),
                     ),
                   ],
@@ -178,4 +191,70 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  List<Mail> getEmails() {
+    return List<Mail>.generate(
+      5,
+      (index) => Mail(
+        content: 'content',
+        sender: const Sender(name: 'Batman'),
+        time: '3月8號',
+        title: 'To Superman $index',
+      ),
+    );
+  }
+}
+
+class MailPage extends StatelessWidget {
+  final Mail mail;
+  const MailPage({
+    super.key,
+    required this.mail,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.back_hand),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Text('title: ${mail.title}'),
+            Text('sender name: ${mail.sender.name}'),
+            Text('time: ${mail.time}'),
+            Image.network(mail.sender.avatarUrl),
+            Text('content: ${mail.content}'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Sender {
+  final String avatarUrl =
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9r3ogaSmpwNYSaEKRifVaHjwmYsKSW7fC6Q&usqp=CAU';
+  final String name;
+  const Sender({required this.name});
+}
+
+class Mail {
+  final String title;
+  final Sender sender;
+  final String time;
+  final String content;
+
+  const Mail({
+    required this.title,
+    required this.sender,
+    required this.time,
+    required this.content,
+  });
 }
